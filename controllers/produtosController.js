@@ -1,8 +1,9 @@
-
+const pool=require("../db")
 
 
 exports.produto_get=(req,res,next)=>{
-res.json({produto:'produtos'})
+    pool.query("SELECT * FROM produto").then(cliente=>res.json({cliente}))
+
     //Post.find({}).then(post=>res.json({post,errors:[],user:req.user}))
 }
 
@@ -13,22 +14,13 @@ exports.produto_post=(req,res,next)=>{
            return res.send("Need to be logged in to submit post")
         }
         console.log('Should not appear if not logged in')
-        
-     //  let post=new Post({
-      //      codigo:req.body.codigo,
-       //    descricao:req.body.descricao,
-       //    medida:req.body.medida,
-       //    compra:req.body.compra,
-        //   venda:req.body.venda
-       // })  
-    
-               // post.save(err=>{
+ 
                   //  if(err){
+                    pool.query("INSERT INTO produto (codigo,descricao,medida,compra,venda) VALUES ($1,$2,$3,$4,$5) ",
+                    [req.body.codigo,req.body.descricao,req.body.medida,req.body.compra,req.body.venda])
+
                     console.log('sucesso')
-                  //      res.send(err)
-                  //      return next(err)}
-                   // res.status(202).send("Succefully sent")
-                //})
+          
     }
 
 

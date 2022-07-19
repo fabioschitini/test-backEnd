@@ -2,39 +2,54 @@
 const bcrypt=require("bcryptjs")
 const jwt=require('jsonwebtoken')
 require('dotenv').config()
+const pool=require("../db")
+
+
+
+exports.sign_in_post=(req,res,next)=>{
+  console.log('post sign ing')
+  bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
+    console.log(hashedPassword,"hased pasworddddddddddddddd")
+
+    pool.query("INSERT INTO usuario (name,username,password) VALUES ($1,$2,$3) ",
+    [req.body.name,req.body.username,hashedPassword]).then(result=>res.json("Sucesso em cadastrar"))
+  })
+ console.log("Cadastrado com sucesso")
+}
 
 exports.log_in_get=(req,res,next)=>{
     console.log(req.user,'dsdaasdadsa')
     res.json({user:req.user})
 }
 
-exports.log_in_post=(req,res,next)=>{
-    console.log(req.body.username,'usernameeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
-    //   Users.findOne({ username: req.body.username }, (err, user) => {
+exports.log_in_post=async (req,res,next)=>{
          try{
-           if (req.body.username!=='user') {
+          const userArray= await pool.query("SELECT * FROM usuario")
+          console.log('user', userArray.rows.filter(user=>user.username===req.body.username))
+  
+let usuario=userArray.rows.filter(user=>user.username===req.body.username)
+           if (!usuario[0]) {
              console.log("Username not found")
             return res.send({errors:"Username not found"})
            }
            console.log("Indo comparar passwordss")
-         //  bcrypt.compare(req.body.password, user.password, (err, ress) => {
-               if (req.body.password==='password') {
-                 // passwords match! log user in
-                 console.log("passwords match! log user in")
-                //return res.send("Password match, log in")  
-                let expire=3600  
-                let user=req.body.username
-                console.log(user,'userrrrrrrrnameeeeeeeeee')
-                const accessToken=jwt.sign({user},'secreteKey',{expiresIn:`${expire}s`})
-               // console.log(accessToken)
-                 req.header.token=accessToken
-                // console.log(req.header,'sessioonnnnnnnnnnnnnnn2222222222222')
-            res.json({user:'user'})
-               } else {
-                 // passwords do not match!
-                 console.log("passwords do not match!")
-                 return res.send({errors:"Passwords do not match!"})
-               }
+           console.log('password',req.body.password)
+          bcrypt.compare(req.body.password,usuario[0].password, (err, ress) => { 
+            if (ress) {
+              console.log("passwords match! log user in")
+             let expire=3600  
+             let user=req.body.username
+             console.log(user,'userrrrrrrrnameeeeeeeeee')
+             const accessToken=jwt.sign({user},'secreteKey',{expiresIn:`${expire}s`})
+              req.header.token=accessToken
+         res.json({user:'user'})
+            } else {
+           
+              console.log("passwords do not match!")
+              return res.send({errors:"Passwords do not match!"})
+            }
+          })
+           
              //})
          }
          catch(err){

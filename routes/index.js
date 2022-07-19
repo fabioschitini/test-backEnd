@@ -34,9 +34,11 @@ jwt.verify(token,'secreteKey',(err,user)=>{
 
   router.get('/login',authenticateToken,userController.log_in_get);
   router.post("/login",userController.log_in_post)
+  router.post("/signIn",userController.sign_in_post)
   router.get('/logout',userController.log_out_get); 
   router.get("/venda",vendaController.venda_get); 
   router.post("/venda",authenticateToken,vendaController.venda_post);
+  router.put("/venda",authenticateToken,vendaController.venda_update);
   router.get("/cliente",clienteController.cliente_get);
   router.post("/cliente",authenticateToken,clienteController.cliente_post);
  router.get("/produto",produtosController.produto_get); 
