@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www",
-    "postinstall": "ng build"
+    "start": "nodemon ./bin/www"
   },
   "engines": {
     "node": "16.14.2"
