@@ -11,7 +11,6 @@ var usersRouter = require('./routes/users');
 
 
 var app = express();
-//git subtree push --prefix server heroku main yolooooooooo
 app.enable('trust proxy')
 
 
@@ -25,7 +24,6 @@ app.use(cors({credentials: true, origin: ['https://fabioschitini.github.io/test-
 
 ))
 
-//Users.findOne({ username: "fabioschitini1@hotmail.com" }).then(user=>console.log(user))
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -42,7 +40,6 @@ app.use(session({
   },
 }));
 
-//initializePassport(passport,Users)
 
 
 

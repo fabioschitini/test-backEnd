@@ -7,15 +7,12 @@ const vendaController=require('../controllers/vendaController')
 const produtosController=require('../controllers/produtosController')
 const clienteController=require('../controllers/clienteController')
 
-/* GET home page. */
 
  
 
   function authenticateToken(req,res,next){
     let token;
 token=req.header.token
-console.log(token,'token mate')
-//next()
 if(!token) {return res.json({user:undefined})}
 jwt.verify(token,'secreteKey',(err,user)=>{
    if(err) return res.json({user:undefined})

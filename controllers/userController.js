@@ -1,4 +1,3 @@
-//var Users= require('../models/users');
 const bcrypt=require("bcryptjs")
 const jwt=require('jsonwebtoken')
 require('dotenv').config()
@@ -51,12 +50,10 @@ let usuario=userArray.rows.filter(user=>user.username===req.body.username)
             }
           })
            
-             //})
          }
          catch(err){
            return res.json("Error");
          }
-     //  });
 }
 
 exports.log_out_get=(req,res,next)=>{
