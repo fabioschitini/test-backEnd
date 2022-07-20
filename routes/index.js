@@ -31,6 +31,9 @@ jwt.verify(token,'secreteKey',(err,user)=>{
 
 
 
+  router.get('/test',(req,res)=>{
+    res.json("Bem vindo ao meu API")
+  });
 
   router.get('/login',authenticateToken,userController.log_in_get);
   router.post("/login",userController.log_in_post)
