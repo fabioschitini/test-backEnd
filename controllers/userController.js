@@ -2,7 +2,8 @@
 const bcrypt=require("bcryptjs")
 const jwt=require('jsonwebtoken')
 require('dotenv').config()
-const pool=require("../db")
+//const pool=require("../db")
+const pool=require("../config")
 
 
 

@@ -1,6 +1,7 @@
 //var Post= require('../models/post');
 //var Comments= require('../models/comments');
-const pool=require("../db")
+//const pool=require("../db")
+const pool=require("../config")
 
 
 exports.venda_get=(req,res,next)=>{

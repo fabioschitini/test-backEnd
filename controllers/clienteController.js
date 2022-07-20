@@ -1,4 +1,5 @@
-const pool=require("../db")
+//const pool=require("../db")
+const pool=require("../config")
 
 exports.cliente_get=(req,res,next)=>{
 
